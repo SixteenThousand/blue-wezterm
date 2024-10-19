@@ -1,0 +1,18 @@
+#!/bin/sh
+
+case $1 in
+	-h|--help)
+		cat <<- EOF
+		Wezterm message script
+		Usage:
+			wezmsg
+		This will show a list of colour schemes to choose; pick one
+		and then use the shortcut (currently Ctrl-Shift-i) to load the new
+		colour scheme.
+		EOF
+	exit 0;;
+esac
+
+cd ~/.config/wezterm/state
+
+echo "$(cat colour_schemes_list | fzf)" > colour_scheme
