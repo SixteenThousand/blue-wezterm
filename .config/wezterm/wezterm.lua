@@ -16,7 +16,7 @@ else
 end
 
 -- BACKGROUND
-config.window_background_opacity = 0.9
+config.window_background_opacity = 0.95
 
 -- WINDOW STUFF
 config.window_padding = {
@@ -76,7 +76,7 @@ config.keys = {
             if overrides.window_background_opacity < 1.0 then
                 overrides.window_background_opacity = 1.0
             else
-                overrides.window_background_opacity = 0.9
+                overrides.window_background_opacity = 0.95
             end
             window:set_config_overrides(overrides)
         end)
