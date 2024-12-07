@@ -11,6 +11,7 @@ config.font_size = 14.0
 local fp = io.open(COLOURSCHEME_FILE,"r")
 if fp then
     config.color_scheme = fp:read()
+    fp:close()
 else
     config.color_scheme = "Rosé Pine Moon (base16)"
 end
