@@ -1,18 +1,39 @@
 #!/bin/sh
 
+STATE_DIR=${XDG_CONFIG_HOME:-$HOME/.config}/wezterm/state
+CSCHEME_STATE=$STATE_DIR/colour_scheme
+CSCHEME_LIST=$STATE_DIR/colour_schemes_list
+
 case $1 in
 	-h|--help)
 		cat <<- EOF
 		Wezterm message script
 		Usage:
-			wezmsg
+		    wezmsg
 		This will show a list of colour schemes to choose; pick one
 		and then use the shortcut (currently Ctrl-Shift-i) to load the new
 		colour scheme.
+		    wezmsg -c|--colourscheme {COLOUR SCHEME NAME}
+		Changes the colour scheme to the one specified. Checks that the colour 
+		scheme exists first.
 		EOF
-	exit 0;;
+		exit 0;;
+	-c|--colourscheme)
+		if grep "$2" "$CSCHEME_LIST" 2>&1 >/dev/null
+		then
+			echo "$2" > $CSCHEME_STATE
+			printf 'Colour scheme changed to >>\e[1m%s\e[0m<<' "$2"
+		else
+			printf 'Colour scheme >>\e[1m%s\e[0m<< not found!' "$2"
+		fi;;
+	*)
+		# change colour scheme with fzf
+		NEW_CSCHEME="$(cat $CSCHEME_LIST | fzf)"
+		if [ -n "$NEW_CSCHEME" ]
+		then
+			echo "$NEW_CSCHEME" > $CSCHEME_STATE
+			printf 'Colour scheme changed to >>\e[1m%s\e[0m<<' "$NEW_CSCHEME"
+		else
+			echo 'No colour scheme selected!'
+		fi;;
 esac
-
-cd ~/.config/wezterm/state
-
-echo "$(cat colour_schemes_list | fzf)" > colour_scheme
