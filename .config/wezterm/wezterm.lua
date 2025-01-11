@@ -15,6 +15,9 @@ if fp then
 else
     config.color_scheme = "Rosé Pine Moon (base16)"
 end
+-- disable ligatures
+-- this may need to change if you change the font
+config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0', }
 
 -- BACKGROUND
 config.window_background_opacity = 0.95
@@ -30,6 +33,8 @@ config.enable_wayland = true
 config.enable_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = false
+config.adjust_window_size_when_changing_font_size = false
+config.window_decorations = "NONE"
 
 config.default_prog = { "bash" }
 
